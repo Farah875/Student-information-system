@@ -1,0 +1,640 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Forms.admin;
+
+import DTO.Course;
+import DTO.Class;
+import DTO.User;
+import Repositories.courseRepo;
+import Repositories.classRepo;
+import Repositories.userRepo;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
+/**
+ *
+ * @author Farah Z
+ */
+public class CoursesForm extends javax.swing.JFrame {
+
+    /**
+     * Creates new form courseForm
+     */
+    classRepo repo = new classRepo();
+    courseRepo repocourse = new courseRepo();
+    userRepo instructors = new userRepo();
+    User logged ;
+    
+    
+        public CoursesForm() {
+        initComponents();
+        this.logged = instructors.getUserByID(1);
+        
+        // set background color of empty area of table
+        ((DefaultTableCellRenderer)jTable1.getDefaultRenderer(Object.class))
+                .setBackground(new Color (242,232,199));
+        
+        ((DefaultTableCellRenderer)jTable1.getDefaultRenderer(Object.class))
+                      .setOpaque(false);
+
+        this.jScrollPane1.getViewport().setOpaque(false);
+        
+        //setting the text to center inside the cell
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        jTable1.setDefaultRenderer(Object.class, centerRenderer);
+        
+        // change table header proporties, background and foreground colors, font , text alligment
+       JTableHeader tHeader = jTable1.getTableHeader();
+       tHeader.setForeground(Color.BLACK);
+       tHeader.setBackground(Color.BLACK);
+       tHeader.setFont(new Font ("Times New Roman", Font.BOLD, 14));
+       ((DefaultTableCellRenderer)tHeader.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+       
+       
+       //filling combo boxes
+       for(Class c : repo.getAllClasses())
+       {
+           ClassSelect.addItem(c.getID()+"-"+c.getName());
+       }
+       
+       for( User u : instructors.getAllUsers(1))
+       {
+           InstructorSelect.addItem(u.getUsername()+"-"+u.getFirstName());
+       }
+       
+       
+       RefreshTable();
+       
+
+    }
+    
+    public CoursesForm(User logged) {
+        initComponents();
+        this.logged = logged;
+        
+        // set background color of empty area of table
+        ((DefaultTableCellRenderer)jTable1.getDefaultRenderer(Object.class))
+                .setBackground(new Color (242,232,199));
+        
+        ((DefaultTableCellRenderer)jTable1.getDefaultRenderer(Object.class))
+                      .setOpaque(false);
+
+        this.jScrollPane1.getViewport().setOpaque(false);
+        
+        //setting the text to center inside the cell
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        jTable1.setDefaultRenderer(Object.class, centerRenderer);
+        
+        // change table header proporties, background and foreground colors, font , text alligment
+       JTableHeader tHeader = jTable1.getTableHeader();
+       tHeader.setForeground(Color.BLACK);
+       tHeader.setBackground(Color.BLACK);
+       tHeader.setFont(new Font ("Times New Roman", Font.BOLD, 14));
+       ((DefaultTableCellRenderer)tHeader.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+       
+       
+       //filling combo boxes
+       for(Class c : repo.getAllClasses())
+       {
+           ClassSelect.addItem(c.getID()+"-"+c.getName());
+       }
+       
+       for( User u : instructors.getAllUsers(1))
+       {
+           InstructorSelect.addItem(u.getUsername()+"-"+u.getFirstName());
+       }
+       
+       
+       RefreshTable();
+       
+
+    }
+    
+    
+    
+    
+    
+    public void RefreshTable()
+    { 
+        DefaultTableModel modelPolygon = new DefaultTableModel(new Object[]
+        {"id","Name","Class","Instructor","Time"},0);
+        for ( Course c  : repocourse.getAllCourses() )
+        {
+            modelPolygon.addRow(new Object[] {c.getID(),c.getName(),
+                repo.getClassByID(c.getClassID()).getName(), c.getTeacher().getUsername(),
+            c.getTime()});
+        }
+        
+        
+        this.jTable1.setModel(modelPolygon);
+        this.jTable1.getColumnModel().getColumn(0).setWidth(0);
+        this.jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        this.jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+       
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        ClassSelect = new javax.swing.JComboBox<>();
+        InstructorSelect = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        AddBtn = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        UpdateBtn = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        deleteBtn = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        timeField = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        nameField = new javax.swing.JTextField();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        RefreshItem = new javax.swing.JMenuItem();
+        AddItem = new javax.swing.JMenuItem();
+        updateItem = new javax.swing.JMenuItem();
+        DeleteItem = new javax.swing.JMenuItem();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(249, 226, 132));
+
+        jScrollPane1.setBackground(new java.awt.Color(249, 226, 132));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane1.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        jTable1.setBackground(new java.awt.Color(249, 226, 132));
+        jTable1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jTable1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.setSelectionBackground(new java.awt.Color(156, 107, 22));
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel2.setText("Class Name:");
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel3.setText("Instructor:");
+
+        ClassSelect.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        InstructorSelect.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel6.setText("or Update Selected Course");
+
+        AddBtn.setBackground(new java.awt.Color(225, 181, 70));
+        AddBtn.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        AddBtn.setIcon(new javax.swing.ImageIcon("C:\\Users\\Farah Z\\Desktop\\courses\\Third year 2020_2021\\OOP2\\Project\\SISProject\\src\\Assests\\add-icon-small.png")); // NOI18N
+        AddBtn.setText("Add Course");
+        AddBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddBtnMouseClicked(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel7.setText("Select Fields to Add Course");
+
+        UpdateBtn.setBackground(new java.awt.Color(225, 181, 70));
+        UpdateBtn.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        UpdateBtn.setIcon(new javax.swing.ImageIcon("C:\\Users\\Farah Z\\Desktop\\courses\\Third year 2020_2021\\OOP2\\Project\\SISProject\\src\\Assests\\check-tick-icon-14145.png")); // NOI18N
+        UpdateBtn.setText("Update Course");
+        UpdateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UpdateBtnMouseClicked(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel5.setText("Select course to update or delete");
+
+        deleteBtn.setBackground(new java.awt.Color(225, 181, 70));
+        deleteBtn.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        deleteBtn.setIcon(new javax.swing.ImageIcon("C:\\Users\\Farah Z\\Desktop\\courses\\Third year 2020_2021\\OOP2\\Project\\SISProject\\src\\Assests\\exit.png")); // NOI18N
+        deleteBtn.setText("Delete Selected Course");
+        deleteBtn.setToolTipText("");
+        deleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteBtnMouseClicked(evt);
+            }
+        });
+
+        backBtn.setBackground(new java.awt.Color(225, 181, 70));
+        backBtn.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        backBtn.setText("Back to Home");
+        backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backBtnMouseClicked(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel8.setText("Time:");
+
+        timeField.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel9.setText("Name:");
+
+        nameField.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(AddBtn)
+                                .addGap(36, 36, 36)
+                                .addComponent(UpdateBtn))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(98, 98, 98)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(timeField, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ClassSelect, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(InstructorSelect, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(deleteBtn)
+                                .addGap(106, 106, 106)
+                                .addComponent(backBtn)
+                                .addContainerGap())))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ClassSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(InstructorSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(timeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(AddBtn)
+                            .addComponent(UpdateBtn))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(deleteBtn)
+                        .addContainerGap(52, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(backBtn)
+                .addContainerGap())
+        );
+
+        jMenu3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Farah Z\\Desktop\\courses\\Third year 2020_2021\\OOP2\\Project\\SISProject\\src\\Assests\\settings-icon-14968.png")); // NOI18N
+        jMenu3.setText("Manage");
+
+        RefreshItem.setText("RefreshTable");
+        RefreshItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RefreshItemActionPerformed(evt);
+            }
+        });
+        jMenu3.add(RefreshItem);
+
+        AddItem.setText("Add Course");
+        AddItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddItemActionPerformed(evt);
+            }
+        });
+        jMenu3.add(AddItem);
+
+        updateItem.setText("Update Course");
+        updateItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateItemActionPerformed(evt);
+            }
+        });
+        jMenu3.add(updateItem);
+
+        DeleteItem.setText("Delete Course");
+        DeleteItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteItemActionPerformed(evt);
+            }
+        });
+        jMenu3.add(DeleteItem);
+
+        jMenuBar2.add(jMenu3);
+
+        setJMenuBar(jMenuBar2);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void AddBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddBtnMouseClicked
+        Course c = new Course();
+//        String[] courseValue = CourseSelect.getSelectedItem().toString().split("-");
+//        String[] sectionValue = SectionSelect.getSelectedItem().toString().split("-");
+//        String[] instructorValue = InstructorSelect.getSelectedItem().toString().split("-");
+
+        c.setClass(repo.getAllClasses().get( ClassSelect.getSelectedIndex()).getID());
+        c.setTeacher(instructors.getAllUsers(1).get(InstructorSelect.getSelectedIndex()));
+        c.setTime(timeField.getText());
+        c.setName(nameField.getText());
+        
+        
+        if(repocourse.addCourse(c) == 1)
+        {
+            JOptionPane.showMessageDialog(null,"Course added successfuly");
+        }
+        else
+             JOptionPane.showMessageDialog(null,"Error occured please try again later");
+
+        RefreshTable();
+        
+    }//GEN-LAST:event_AddBtnMouseClicked
+
+    private void UpdateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateBtnMouseClicked
+        
+        int column = 0;
+        int row = this.jTable1.getSelectedRow();
+        if ( row >= 0)
+        {
+            Course c = repocourse.getCourseByID(Integer.parseInt(this.jTable1.getValueAt(row, column).toString()));
+            c.setClass(repo.getAllClasses().get( ClassSelect.getSelectedIndex()).getID());
+            c.setTeacher(instructors.getAllUsers(1).get(InstructorSelect.getSelectedIndex()));
+            c.setName(nameField.getText());
+            c.setTime(timeField.getText());
+            
+            if(repocourse.updateCourse(c)== 1)
+            {
+                JOptionPane.showMessageDialog(null,"Course updated successfuly");
+            }
+            else
+                 JOptionPane.showMessageDialog(null,"Error occured please try again later");
+
+            RefreshTable();
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Please Select a row to update");
+        }
+        
+    }//GEN-LAST:event_UpdateBtnMouseClicked
+
+    private void backBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnMouseClicked
+        adminMainForm mainFrame = new adminMainForm(logged);
+        mainFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backBtnMouseClicked
+
+    private void RefreshItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshItemActionPerformed
+        RefreshTable();
+    }//GEN-LAST:event_RefreshItemActionPerformed
+
+    private void AddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddItemActionPerformed
+        Course c = new Course();
+
+        c.setClass(repo.getAllClasses().get( ClassSelect.getSelectedIndex()).getID());
+        c.setTeacher(instructors.getAllUsers(1).get(InstructorSelect.getSelectedIndex()));
+        c.setTime(timeField.getText());
+        c.setName(nameField.getText());
+        
+        
+        if(repocourse.addCourse(c) == 1)
+        {
+            JOptionPane.showMessageDialog(null,"course added successfuly");
+        }
+        else
+             JOptionPane.showMessageDialog(null,"Error occured please try again later");
+
+        RefreshTable();
+    }//GEN-LAST:event_AddItemActionPerformed
+
+    private void updateItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemActionPerformed
+        int column = 0;
+        int row = this.jTable1.getSelectedRow();
+        if ( row >= 0)
+        {
+            Course c = repocourse.getCourseByID(Integer.parseInt(this.jTable1.getValueAt(row, column).toString()));
+            c.setClass(repo.getAllClasses().get( ClassSelect.getSelectedIndex()).getID());
+            c.setTeacher(instructors.getAllUsers(1).get(InstructorSelect.getSelectedIndex()));
+            c.setName(nameField.getText());
+            c.setTime(timeField.getText());
+            
+            if(repocourse.updateCourse(c)== 1)
+            {
+                JOptionPane.showMessageDialog(null,"Course updated successfuly");
+            }
+            else
+                 JOptionPane.showMessageDialog(null,"Error occured please try again later");
+
+            RefreshTable();
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Please Select a row to update");
+        }
+        
+    }//GEN-LAST:event_updateItemActionPerformed
+
+    private void DeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteItemActionPerformed
+        int column = 0;
+        int row = this.jTable1.getSelectedRow();
+        if ( row >= 0)
+        {
+           if ( repocourse.deleteCourse(Integer.parseInt(this.jTable1.getValueAt(row, column).toString())) == 1)
+           {
+                JOptionPane.showMessageDialog(null,"Course  deleted successfuly");
+           }
+            else
+                 JOptionPane.showMessageDialog(null,"Error occured please try again later");
+
+            RefreshTable();
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Please Select a row to delete");
+        } 
+               
+               
+        
+    }//GEN-LAST:event_DeleteItemActionPerformed
+
+    private void deleteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteBtnMouseClicked
+        int column = 0;
+        int row = this.jTable1.getSelectedRow();
+        if ( row >= 0)
+        {
+           if ( repocourse.deleteCourse(Integer.parseInt(this.jTable1.getValueAt(row, column).toString())) == 1)
+           {
+                JOptionPane.showMessageDialog(null,"Course  deleted successfuly");
+           }
+            else
+                 JOptionPane.showMessageDialog(null,"Error occured please try again later");
+
+            RefreshTable();
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Please Select a row to delete");
+        } 
+    }//GEN-LAST:event_deleteBtnMouseClicked
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CoursesForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CoursesForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CoursesForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CoursesForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new  CoursesForm().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddBtn;
+    private javax.swing.JMenuItem AddItem;
+    private javax.swing.JComboBox<String> ClassSelect;
+    private javax.swing.JMenuItem DeleteItem;
+    private javax.swing.JComboBox<String> InstructorSelect;
+    private javax.swing.JMenuItem RefreshItem;
+    private javax.swing.JButton UpdateBtn;
+    private javax.swing.JButton backBtn;
+    private javax.swing.JButton deleteBtn;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JTextField timeField;
+    private javax.swing.JMenuItem updateItem;
+    // End of variables declaration//GEN-END:variables
+}
